@@ -106,7 +106,10 @@
   // leading #. Thanks for making this necessary, Firefox!
   function get_fragment( url ) {
     url = url || location.href;
-    return '#' + url.replace( /^[^#]*#?(.*)$/, '$1' );
+    //modified by lenzhang
+    var index = url.indexOf( '#' );
+    return index === -1 ? '#' : url.substr( index );
+    //return '#' + url.replace( /^[^#]*#?(.*)$/, '$1' );
   };
   
   // Method: jQuery.fn.hashchange
@@ -297,7 +300,7 @@
     // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
     // vvvvvvvvvvvvvvvvvvv REMOVE IF NOT SUPPORTING IE6/7/8 vvvvvvvvvvvvvvvvvvv
     // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-    $.browser.msie && !supports_onhashchange && (function(){
+    !$.support.boxModel && !supports_onhashchange && (function(){
       // Not only do IE6/7 need the "magical" Iframe treatment, but so does IE8
       // when running in "IE7 compatibility" mode.
       
